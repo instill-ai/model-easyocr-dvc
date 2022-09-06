@@ -1,11 +1,23 @@
 name: "textdet-infer"
 platform: "onnxruntime_onnx"
-max_batch_size: 10
+max_batch_size: 2
 instance_group [
   {
     count: 1
-    kind: KIND_CPU
+    kind: KIND_GPU
   }
 ]
 dynamic_batching { }
 version_policy: { all { }}
+model_warmup [{
+    name : "textdet-infer"
+    batch_size: 2
+    inputs {
+        key: "input"
+        value: {
+            data_type: TYPE_FP32
+            dims: [ 3, 1920, 2240 ]
+            random_data : True
+        }
+    }
+}]

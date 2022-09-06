@@ -1,11 +1,23 @@
 name: "textrecog-infer"
 platform: "onnxruntime_onnx"
-max_batch_size: 1024
+max_batch_size: 256
 instance_group [
   {
     count: 1
-    kind: KIND_CPU
+    kind: KIND_GPU
   }
 ]
 dynamic_batching { }
 version_policy: { all { }}
+model_warmup [{
+    name : "textrecog-infer"
+    batch_size: 256
+    inputs {
+        key: "input1"
+        value: {
+            data_type: TYPE_FP32
+            dims: [ 1, 64, 320 ]
+            random_data : True
+        }
+    }
+}]
