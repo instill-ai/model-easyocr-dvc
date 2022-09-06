@@ -1,6 +1,6 @@
 name: "pre"
 backend: "python"
-max_batch_size: 2
+max_batch_size: 4
 input [
   {
     name: "input"
